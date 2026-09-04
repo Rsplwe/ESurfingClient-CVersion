@@ -167,4 +167,10 @@ extern const uint8_t iv_35101415_A20F_4DFE_B00B_0B4F3B2F8C66[16];
 extern const uint8_t key_03F8A638_5C23_418B_972C_A2BA6927EF77[48];
 extern const uint8_t iv_03F8A638_5C23_418B_972C_A2BA6927EF77[16];
 
+// -----------------------------------------------------------------
+// Algo Id: 054DDD03-911E-49F5-89D6-EFBF5055FBFF (DESede/CBC/Two-Layer) (Windows)
+// -----------------------------------------------------------------
+extern const uint8_t key_054DDD03_911E_49F5_89D6_EFBF5055FBFF[48];
+extern const uint8_t iv_054DDD03_911E_49F5_89D6_EFBF5055FBFF[16];
+
 #endif // ESURFINGCLIENT_KEYDATA_H

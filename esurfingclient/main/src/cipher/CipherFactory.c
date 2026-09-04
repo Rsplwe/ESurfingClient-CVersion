@@ -245,6 +245,18 @@ static cipher_interface_t* create_cipher_factory(const char* algo_id)
             iv_03F8A638_5C23_418B_972C_A2BA6927EF77
         );
     }
+
+    // 3DES-CBC (Windows)
+    if (strcmp(algo_id, "054DDD03-911E-49F5-89D6-EFBF5055FBFF") == 0)
+    {
+        LOG_DEBUG("命中 054DDD03-911E-49F5-89D6-EFBF5055FBFF");
+        return create_desede_cbc_linux_cipher(
+            key_054DDD03_911E_49F5_89D6_EFBF5055FBFF,
+            key_054DDD03_911E_49F5_89D6_EFBF5055FBFF + 24,
+            iv_054DDD03_911E_49F5_89D6_EFBF5055FBFF,
+            iv_054DDD03_911E_49F5_89D6_EFBF5055FBFF
+        );
+    }
     return NULL;
 }
 
