@@ -121,7 +121,8 @@ static cipher_interface_t* create_cipher_factory(const char* algo_id)
         LOG_DEBUG("命中 45433DCF-9ECA-4BE5-83F2-F92BA0B4F291");
         return create_aes_cbc_linux_cipher(
             key1_45433DCF_9ECA_4BE5_83F2_F92BA0B4F291,
-            key2_45433DCF_9ECA_4BE5_83F2_F92BA0B4F291
+            key2_45433DCF_9ECA_4BE5_83F2_F92BA0B4F291,
+            iv_45433DCF_9ECA_4BE5_83F2_F92BA0B4F291
         );
     }
     // XTEA (Linux)
@@ -257,6 +258,19 @@ static cipher_interface_t* create_cipher_factory(const char* algo_id)
             iv_054DDD03_911E_49F5_89D6_EFBF5055FBFF
         );
     }
+
+    // AES-CBC (Windows)
+    if (strcmp(algo_id, "066474E5-503E-4B82-98C4-DF4483DAF0B5") == 0)
+    {
+        LOG_DEBUG("命中 066474E5-503E-4B82-98C4-DF4483DAF0B5");
+        return create_aes_cbc_linux_cipher(
+            key1_066474E5_503E_4B82_98C4_DF4483DAF0B5,
+            key2_066474E5_503E_4B82_98C4_DF4483DAF0B5,
+            iv_066474E5_503E_4B82_98C4_DF4483DAF0B5
+        );
+    }
+
+
     return NULL;
 }
 

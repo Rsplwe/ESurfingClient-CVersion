@@ -82,6 +82,7 @@ extern const uint8_t key2_4BA5496A_2123_46A7_85F2_35956EA7BE39[16];
 // -----------------------------------------------------------------
 extern const uint8_t key1_45433DCF_9ECA_4BE5_83F2_F92BA0B4F291[16];
 extern const uint8_t key2_45433DCF_9ECA_4BE5_83F2_F92BA0B4F291[16];
+extern const uint8_t iv_45433DCF_9ECA_4BE5_83F2_F92BA0B4F291[16];
 
 // ----------------------------------------------------------------
 //  Algo Id: 60639D8B-272E-4A4D-976E-AA270987A169 (XTEA Triple-Layer) (Linux)
@@ -172,5 +173,12 @@ extern const uint8_t iv_03F8A638_5C23_418B_972C_A2BA6927EF77[16];
 // -----------------------------------------------------------------
 extern const uint8_t key_054DDD03_911E_49F5_89D6_EFBF5055FBFF[48];
 extern const uint8_t iv_054DDD03_911E_49F5_89D6_EFBF5055FBFF[16];
+
+// -----------------------------------------------------------------
+// Algo Id: 066474E5-503E-4B82-98C4-DF4483DAF0B5 (AES/CBC/Two-Layer) (Windows)
+// -----------------------------------------------------------------
+extern const uint8_t key1_066474E5_503E_4B82_98C4_DF4483DAF0B5[16];
+extern const uint8_t key2_066474E5_503E_4B82_98C4_DF4483DAF0B5[16];
+extern const uint8_t iv_066474E5_503E_4B82_98C4_DF4483DAF0B5[16];
 
 #endif // ESURFINGCLIENT_KEYDATA_H

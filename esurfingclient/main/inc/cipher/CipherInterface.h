@@ -80,7 +80,8 @@ extern cipher_interface_t* create_mod_xtea_linux_cipher(
 
 extern cipher_interface_t* create_aes_cbc_linux_cipher(
     const uint8_t* key1,
-    const uint8_t* key2);
+    const uint8_t* key2,
+    const uint8_t* iv);
 
 extern cipher_interface_t* create_aes_ecb_linux_cipher(
     const uint8_t* key1,
