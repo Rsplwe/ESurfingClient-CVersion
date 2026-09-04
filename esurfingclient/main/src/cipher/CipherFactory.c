@@ -235,6 +235,16 @@ static cipher_interface_t* create_cipher_factory(const char* algo_id)
             iv_35101415_A20F_4DFE_B00B_0B4F3B2F8C66
         );
     }
+
+    // triple modified-TEA CBC (Windows)
+    if (strcmp(algo_id, "03F8A638-5C23-418B-972C-A2BA6927EF77") == 0)
+    {
+        LOG_DEBUG("命中 03F8A638-5C23-418B-972C-A2BA6927EF77");
+        return create_xtea_triple_cbc_windows_cipher(
+            key_03F8A638_5C23_418B_972C_A2BA6927EF77,
+            iv_03F8A638_5C23_418B_972C_A2BA6927EF77
+        );
+    }
     return NULL;
 }
 

@@ -101,6 +101,7 @@ else ()
             src/cipher/algo/linux/mod_xtea_linux.c
             src/cipher/algo/linux/aes_ecb_linux.c
             src/cipher/algo/linux/aes_cbc_linux.c
+            src/cipher/algo/windows/xtea_triple_cbc_windows
             src/cipher/CipherFactory.c
             src/cipher/CipherUtils.c
             src/cipher/KeyData.c

@@ -161,4 +161,10 @@ extern const uint8_t iv_AD8BB5B0_0E72_4198_A362_96D52C1B7ED1[16];
 extern const uint8_t key_35101415_A20F_4DFE_B00B_0B4F3B2F8C66[48];
 extern const uint8_t iv_35101415_A20F_4DFE_B00B_0B4F3B2F8C66[16];
 
+// -----------------------------------------------------------------
+// Algo Id: 03F8A638-5C23-418B-972C-A2BA6927EF77 (triple modified-TEA CBC) (Windows)
+// -----------------------------------------------------------------
+extern const uint8_t key_03F8A638_5C23_418B_972C_A2BA6927EF77[48];
+extern const uint8_t iv_03F8A638_5C23_418B_972C_A2BA6927EF77[16];
+
 #endif // ESURFINGCLIENT_KEYDATA_H
