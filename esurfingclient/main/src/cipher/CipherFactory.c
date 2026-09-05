@@ -270,6 +270,75 @@ static cipher_interface_t* create_cipher_factory(const char* algo_id)
         );
     }
 
+    // triple modified-TEA CBC (Windows)
+    if (strcmp(algo_id, "079637D7-A2A2-41CE-A50D-4CAD3B2334E7") == 0)
+    {
+        LOG_DEBUG("命中 079637D7-A2A2-41CE-A50D-4CAD3B2334E7");
+        return create_xtea_triple_cbc_windows_cipher(
+            key_079637D7_A2A2_41CE_A50D_4CAD3B2334E7,
+            iv_079637D7_A2A2_41CE_A50D_4CAD3B2334E7
+        );
+    }
+
+    // AES-ECB (Windows)
+    if (strcmp(algo_id, "083B005A-7ACA-419A-AC00-6929C0AADB55") == 0)
+    {
+        LOG_DEBUG("命中 083B005A-7ACA-419A-AC00-6929C0AADB55");
+        return create_aes_ecb_linux_cipher(
+            key1_083B005A_7ACA_419A_AC00_6929C0AADB55,
+            key2_083B005A_7ACA_419A_AC00_6929C0AADB55
+        );
+    }
+
+    // AES-ECB (Windows)
+    if (strcmp(algo_id, "08BDB042-5D25-4397-875F-357E9F7700C8") == 0)
+    {
+        LOG_DEBUG("命中 08BDB042-5D25-4397-875F-357E9F7700C8");
+        return create_aes_ecb_linux_cipher(
+            key1_08BDB042_5D25_4397_875F_357E9F7700C8,
+            key2_08BDB042_5D25_4397_875F_357E9F7700C8
+        );
+    }
+
+    // triple modified-TEA CBC (Windows)
+    if (strcmp(algo_id, "0A2375CB-1F91-4064-B00F-1CF3A1AF6E4A") == 0)
+    {
+        LOG_DEBUG("命中 0A2375CB-1F91-4064-B00F-1CF3A1AF6E4A");
+        return create_xtea_triple_cbc_windows_cipher(
+            key_0A2375CB_1F91_4064_B00F_1CF3A1AF6E4A,
+            iv_0A2375CB_1F91_4064_B00F_1CF3A1AF6E4A
+        );
+    }
+
+    // triple modified-TEA CBC (Windows)
+    if (strcmp(algo_id, "11734889-14D8-48FA-ACEC-36452CA3FE8D") == 0)
+    {
+        LOG_DEBUG("命中 11734889-14D8-48FA-ACEC-36452CA3FE8D");
+        return create_xtea_triple_cbc_windows_cipher(
+            key_11734889_14D8_48FA_ACEC_36452CA3FE8D,
+            iv_11734889_14D8_48FA_ACEC_36452CA3FE8D
+        );
+    }
+
+    // triple modified-TEA CBC (Windows)
+    if (strcmp(algo_id, "CF750526-3D99-44BE-A0DE-09DEADC97D52") == 0)
+    {
+        LOG_DEBUG("命中 CF750526-3D99-44BE-A0DE-09DEADC97D52");
+        return create_xtea_triple_cbc_windows_cipher(
+            key_CF750526_3D99_44BE_A0DE_09DEADC97D52,
+            iv_CF750526_3D99_44BE_A0DE_09DEADC97D52
+        );
+    }
+
+    // triple modified-TEA CBC (Windows)
+    if (strcmp(algo_id, "FC05D786-59A7-4469-B276-0D9B89EAD057") == 0)
+    {
+        LOG_DEBUG("命中 FC05D786-59A7-4469-B276-0D9B89EAD057");
+        return create_xtea_triple_cbc_windows_cipher(
+            key_FC05D786_59A7_4469_B276_0D9B89EAD057,
+            iv_FC05D786_59A7_4469_B276_0D9B89EAD057
+        );
+    }
 
     return NULL;
 }
