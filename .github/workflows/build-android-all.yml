@@ -17,6 +17,9 @@ on:
       tail_wind_labs_version:
         required: true
         type: string
+      abi:
+        required: true
+        type: string
 
 env:
   NDK_VERSION: r30
