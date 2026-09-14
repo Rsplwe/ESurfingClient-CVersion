@@ -312,7 +312,7 @@ jobs:
       fail-fast: false
       matrix:
         include: ${{ fromJSON(needs.get-version.outputs.android_matrix) }}
-    uses: ./.github/workflows/build-android.yml
+    uses: ./.github/workflows/build-android-all.yml
     secrets: inherit
     needs: get-version
     with:
