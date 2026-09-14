@@ -24,27 +24,37 @@ on:
 env:
   NDK_VERSION: r30
   NDK_DIR: android-ndk-r30
+  ANDROID_API: 24
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - abi: arm64-v8a
-            target: aarch64-linux-android
-            api: 24
-          - abi: armeabi-v7a
-            target: armv7a-linux-androideabi
-            api: 24
-          - abi: x86_64
-            target: x86_64-linux-android
-            api: 24
-
     steps:
       - uses: actions/checkout@v7
+
+      - name: 解析 ABI 参数
+        id: abi
+        shell: bash
+        run: |
+          set -e
+          case "${{ inputs.abi }}" in
+            arm64-v8a)
+              echo "target=aarch64-linux-android" >> "$GITHUB_OUTPUT"
+              ;;
+            armeabi-v7a)
+              echo "target=armv7a-linux-androideabi" >> "$GITHUB_OUTPUT"
+              ;;
+            x86_64)
+              echo "target=x86_64-linux-android" >> "$GITHUB_OUTPUT"
+              ;;
+            *)
+              echo "❌ 不支持的 ABI: ${{ inputs.abi }}"
+              exit 1
+              ;;
+          esac
+          echo "abi=${{ inputs.abi }}" >> "$GITHUB_OUTPUT"
+          echo "api=$ANDROID_API" >> "$GITHUB_OUTPUT"
 
       - name: 安装软件包 (最多重试 3 次)
         run: |
@@ -86,16 +96,16 @@ jobs:
         id: cache-curl
         uses: actions/cache@v6
         with:
-          path: curl-android-${{ matrix.abi }}
-          key: curl-${{ inputs.curl_version }}-android-${{ matrix.abi }}
+          path: curl-android-${{ steps.abi.outputs.abi }}
+          key: curl-${{ inputs.curl_version }}-android-${{ steps.abi.outputs.abi }}
 
-      - name: 构建 libcurl 静态链接库 (Android ${{ matrix.abi }})
+      - name: 构建 libcurl 静态链接库 (Android ${{ steps.abi.outputs.abi }})
         if: steps.cache-curl.outputs.cache-hit != 'true'
         run: |
           set -e
           export PATH=$TOOLCHAIN/bin:$PATH
-          export CC=$TOOLCHAIN/bin/${{ matrix.target }}${{ matrix.api }}-clang
-          export CXX=$TOOLCHAIN/bin/${{ matrix.target }}${{ matrix.api }}-clang++
+          export CC=$TOOLCHAIN/bin/${{ steps.abi.outputs.target }}${{ steps.abi.outputs.api }}-clang
+          export CXX=$TOOLCHAIN/bin/${{ steps.abi.outputs.target }}${{ steps.abi.outputs.api }}-clang++
           export AR=$TOOLCHAIN/bin/llvm-ar
           export AS=$CC
           export LD=$TOOLCHAIN/bin/ld
@@ -107,8 +117,8 @@ jobs:
           cd curl-${{ inputs.curl_version }}
 
           ./configure \
-            --prefix=$GITHUB_WORKSPACE/curl-android-${{ matrix.abi }} \
-            --host=${{ matrix.target }} \
+            --prefix=$GITHUB_WORKSPACE/curl-android-${{ steps.abi.outputs.abi }} \
+            --host=${{ steps.abi.outputs.target }} \
             --enable-static \
             --disable-shared \
             --without-ssl \
@@ -168,7 +178,7 @@ jobs:
           make -j$(nproc)
           make install
 
-      - name: 构建 ESurfingClient 程序 (Android ${{ matrix.abi }})
+      - name: 构建 ESurfingClient 程序 (Android ${{ steps.abi.outputs.abi }})
         run: |
           set -e
 
@@ -176,11 +186,11 @@ jobs:
 
           cmake -B build -S . \
             -DCMAKE_TOOLCHAIN_FILE=$ANDROID_NDK_HOME/build/cmake/android.toolchain.cmake \
-            -DANDROID_ABI=${{ matrix.abi }} \
-            -DANDROID_PLATFORM=android-${{ matrix.api }} \
+            -DANDROID_ABI=${{ steps.abi.outputs.abi }} \
+            -DANDROID_PLATFORM=android-${{ steps.abi.outputs.api }} \
             -DANDROID_STL=c++_static \
             -DCMAKE_BUILD_TYPE=Release \
-            -DCMAKE_PREFIX_PATH=$GITHUB_WORKSPACE/curl-android-${{ matrix.abi }} \
+            -DCMAKE_PREFIX_PATH=$GITHUB_WORKSPACE/curl-android-${{ steps.abi.outputs.abi }} \
             -DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY=BOTH \
             -DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE=BOTH \
             -DCMAKE_VERBOSE_MAKEFILE=ON
@@ -188,13 +198,13 @@ jobs:
           cmake --build build -j$(nproc)
 
           cp build/ESurfingClient \
-             ../../ESurfingClient-${{ inputs.full_version }}-android-${{ matrix.abi }}
+             ../../ESurfingClient-${{ inputs.full_version }}-android-${{ steps.abi.outputs.abi }}
 
-          ls -lh ../../ESurfingClient-${{ inputs.full_version }}-android-${{ matrix.abi }}
+          ls -lh ../../ESurfingClient-${{ inputs.full_version }}-android-${{ steps.abi.outputs.abi }}
 
       - name: 验证
         run: |
-          BIN="ESurfingClient-${{ inputs.full_version }}-android-${{ matrix.abi }}"
+          BIN="ESurfingClient-${{ inputs.full_version }}-android-${{ steps.abi.outputs.abi }}"
           if [ -f "$BIN" ]; then
             echo "✅ 构建成功"
             echo "📏 文件大小: $(du -h "$BIN" | cut -f1)"
@@ -237,12 +247,12 @@ jobs:
 
       - name: 打包成 tar.gz 压缩包
         run: |
-          tar -czf esurfingclient-${{ inputs.full_version }}-android-${{ matrix.abi }}.tar.gz \
-            ESurfingClient-${{ inputs.full_version }}-android-${{ matrix.abi }} portal/
+          tar -czf esurfingclient-${{ inputs.full_version }}-android-${{ steps.abi.outputs.abi }}.tar.gz \
+            ESurfingClient-${{ inputs.full_version }}-android-${{ steps.abi.outputs.abi }} portal/
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v7
         with:
-          name: esurfingclient-${{ inputs.full_version }}-android-${{ matrix.abi }}
-          path: esurfingclient-${{ inputs.full_version }}-android-${{ matrix.abi }}.tar.gz
+          name: esurfingclient-${{ inputs.full_version }}-android-${{ steps.abi.outputs.abi }}
+          path: esurfingclient-${{ inputs.full_version }}-android-${{ steps.abi.outputs.abi }}.tar.gz
           retention-days: 30
